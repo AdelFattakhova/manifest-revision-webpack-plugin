@@ -1,6 +1,11 @@
 Manifest Revision Webpack Plugin changelog
 ==========================================
 
+Version 0.5.1
+-------------
+
+- Add support for webpack 5.x
+
 Version 0.5.0
 -------------
 
