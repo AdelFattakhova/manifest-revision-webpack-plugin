@@ -146,7 +146,7 @@ ManifestRevisionPlugin.prototype.walkAndPrefetchAssets = function (compiler) {
             file: function (root, fileStat, next) {
                 var assetPath = path.resolve(root, fileStat.name);
                 if (self.isSafeToTrack(assetPath)) {
-                    compiler.apply(new webpack.PrefetchPlugin(assetPath));
+                    new webpack.PrefetchPlugin(assetPath).apply(compiler);
                 }
 
                 next();
@@ -175,7 +175,7 @@ ManifestRevisionPlugin.prototype.apply = function (compiler) {
 
     self.walkAndPrefetchAssets(compiler);
 
-    compiler.plugin('done', function (stats) {
+    function done(stats) {
         var data = stats.toJson(options);
         var parsedAssets = self.parsedAssets(data.modules);
         var outputData = null;
@@ -194,7 +194,10 @@ ManifestRevisionPlugin.prototype.apply = function (compiler) {
         }
 
         fs.writeFileSync(output, String(outputData));
-    });
+    };
+
+    const plugin = { name: 'ManifestRevisionPlugin' };
+    compiler.hooks.done.tap(plugin, done.bind(self));
 };
 
 module.exports = ManifestRevisionPlugin;
