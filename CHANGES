@@ -1,6 +1,11 @@
 Manifest Revision Webpack Plugin changelog
 ==========================================
 
+Version 0.5.2
+-------------
+
+- Fix deprecated compiler.plugin error for webpack 5
+
 Version 0.5.1
 -------------
 
